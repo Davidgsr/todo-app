@@ -1,7 +1,13 @@
-def get_todos():
-    with open('todos.txt', 'r') as file_local:
+def get_todos(filepath='todos.txt') -> list:
+    """ Read a text file and return the list of to-do items. """
+    with open(filepath, 'r') as file_local:
         todos_local = file_local.readlines()
     return todos_local
+
+def write_todos(todos_arg, filepath='todos.txt'):
+    """ Write the to-do items list in the text file. """
+    with open(filepath, 'w') as file_local:
+        file_local.writelines(todos_arg)
 
 
 while True:
@@ -15,8 +21,7 @@ while True:
 
         todos.append(todo + '\n')
 
-        with open('todos.txt', 'w') as file:
-            file.writelines(todos)
+        write_todos(todos)
 
     elif user_action.startswith('show'):
         todos = get_todos()
@@ -36,8 +41,8 @@ while True:
             new_todo = input("Enter a new todo: ")
             todos[number] = new_todo + '\n'
 
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+            write_todos(todos)
+
         except ValueError:
             print('Your command is not valid.')
             continue
@@ -51,13 +56,14 @@ while True:
             todo_to_remove = todos[number - 1].title()
             todos.pop(number - 1)
 
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+            write_todos(todos)
 
             print(f"Todo {todo_to_remove.strip("\n")} was removed from the list")
         except IndexError:
             print('There is no item with that number.')
             continue
+        except ValueError:
+            print('Type the number of todo to complete with the command "Complete..."')
 
     elif user_action.startswith('exit'):
         break
