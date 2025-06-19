@@ -1,4 +1,8 @@
 from functions import *
+import time
+
+now = time.strftime("%b %d, %Y %H:%M:%S")
+print(f"It's {now}")
 
 while True:
     user_action = input("Type add, show, edit, complete or exit: ")
@@ -14,7 +18,7 @@ while True:
         write_todos(todos)
 
     elif user_action.startswith('show'):
-        todos = get_todos()
+        todos = get_todos() 
 
         new_todos = [item.strip("\n") for item in todos] # Remover as quebras de linha extras
 
@@ -58,4 +62,4 @@ while True:
     elif user_action.startswith('exit'):
         break
     else:
-        print('Choose a Valid Option')
+        print('Choose a Valid Option')  
